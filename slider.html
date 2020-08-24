@@ -1,0 +1,211 @@
+<!--浏览器标题切换 start-->
+<script>
+    // 浏览器标题切换改变标题
+    var OriginTitile = document.title; // 保存之前页面标题  
+    var titleTime;
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+            document.title = '你不要我了吗？QAQ';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '~(o°ω°o) ';
+            titleTime = setTimeout(function () {
+                document.title = OriginTitile;
+            }, 1000); // 2秒后恢复原标题  
+        }
+    });
+</script>
+<!--浏览器标题切换 end-->
+<!--点击出现随机文字特效特效-->
+<script type="text/javascript">
+    /* 鼠标特效 */
+    var a_idx = 0;
+    var b_idx = 0;
+    /*   文字和颜色数组 */
+    var a = new Array("路见不平一声吼，吼完继续往前走。", "咸鱼翻身，还是咸鱼。", "水能载舟，亦能煮粥！", "明月几时有，抬头自己瞅。", "天哪！我的衣服又瘦了。", "听君一席话，回家烤白薯。",
+        "流氓不可怕，就怕流氓有文化。", "知识就像内裤，看不见但很重要。", "为了祖国下一代，再丑也得谈恋爱。", "穷玩车，富玩表，牛B加班敲电脑。", "英雄不问出路，流氓不看岁数。",
+        "我们的目标：向钱看，向厚赚。", "帅有个屁用！到头来还不是被卒吃掉！");
+    var b = new Array("#FF0000", "#FF7F00", " #FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#8B00FF", "#FF0000",
+        "#FF7F00", " #FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#8B00FF");
+    jQuery(document).ready(function ($) {
+        $("body").click(function (e) {
+
+            var $i = $("<span/>").text(a[a_idx]);
+            a_idx = parseInt(12 * Math.random()); //文字随机数
+            b_idx = parseInt(14 * Math.random()); //颜色随机数
+            var x = e.pageX,
+                y = e.pageY;
+            $i.css({
+                "z-index": 999,
+                "font-size": "1.3em", //字体大小
+                "top": y - 20,
+                "left": x,
+                "position": "absolute",
+                "font-weight": "bold",
+                "color": b[b_idx]
+            });
+            $("body").append($i);
+            $i.animate({
+                    "top": y - 180,
+                    "opacity": 0
+                },
+                1500,
+                function () {
+                    $i.remove();
+                });
+        });
+    });
+</script>
+<!--点击出现随机文字特效特效end-->
+<!-- 爱心特效 -->
+<script type="text/javascript">
+    (function (window, document, undefined) {
+        var hearts = [];
+        window.requestAnimationFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (callback) {
+                    setTimeout(callback, 1000 / 60);
+                }
+        })();
+        init();
+
+        function init() {
+            css(
+                ".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}"
+                );
+            attachEvent();
+            gameloop();
+        }
+
+        function gameloop() {
+            for (var i = 0; i < hearts.length; i++) {
+                if (hearts[i].alpha <= 0) {
+                    document.body.removeChild(hearts[i].el);
+                    hearts.splice(i, 1);
+                    continue;
+                }
+                hearts[i].y--;
+                hearts[i].scale += 0.004;
+                hearts[i].alpha -= 0.013;
+                hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" +
+                    hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale +
+                    ") rotate(45deg);background:" + hearts[i].color;
+            }
+            requestAnimationFrame(gameloop);
+        }
+
+        function attachEvent() {
+            var old = typeof window.onclick === "function" && window.onclick;
+            window.onclick = function (event) {
+                old && old();
+                createHeart(event);
+            }
+        }
+
+        function createHeart(event) {
+            var d = document.createElement("div");
+            d.className = "heart";
+            hearts.push({
+                el: d,
+                x: event.clientX - 5,
+                y: event.clientY - 5,
+                scale: 1,
+                alpha: 1,
+                color: randomColor()
+            });
+            document.body.appendChild(d);
+        }
+
+        function css(css) {
+            var style = document.createElement("style");
+            style.type = "text/css";
+            try {
+                style.appendChild(document.createTextNode(css));
+            } catch (ex) {
+                style.styleSheet.cssText = css;
+            }
+            document.getElementsByTagName('head')[0].appendChild(style);
+        }
+
+        function randomColor() {
+            return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() *
+                255)) + ")";
+        }
+    })(window, document);
+</script>
+<!-- 爱心特效end -->
+
+<!--卡通人物start -->
+<script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+<script>
+    L2Dwidget.init({
+        "model": {
+            jsonPath: "https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "left",
+            "width": 150,
+            "height": 300,
+            "hOffset": 0,
+            "vOffset": -20
+        },
+        "mobile": {
+            "show": true,
+            "scale": 0.5
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.2
+        }
+    });
+</script>
+<!-- 小帅哥： https://unpkg.com/live2d-widget-model-chitose@1.0.5/assets/chitose.model.json
+
+    萌娘：https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json 
+    
+    小可爱（女）：https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json 
+    
+    小可爱（男）：https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json
+    
+    初音：https://unpkg.com/live2d-widget-model-miku@1.0.5/assets/miku.model.json -->
+<!--卡通人物send -->
+
+<script language="javascript" type="text/javascript">
+    //生成目录索引列表
+    function GenerateContentList() {
+        var jquery_h2_list = $('#cnblogs_post_body h2'); //如果你的章节标题不是h2,只需要将这里的h2换掉即可
+        if (jquery_h2_list.length > 0) {
+            var content = '<a name="_labelTop"></a>';
+            content += '<div id="navCategory">';
+            content += '<p style="font-size:18px"><b>阅读目录</b></p>';
+            content += '<ul>';
+            for (var i = 0; i < jquery_h2_list.length; i++) {
+                var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i +
+                    '"></a></div>';
+                $(jquery_h2_list[i]).before(go_to_top);
+                var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h2_list[i]).text() + '</a></li>';
+                content += li_content;
+            }
+            content += '</ul>';
+            content += '</div>';
+            if ($('#cnblogs_post_body').length != 0) {
+                $($('#cnblogs_post_body')[0]).prepend(content);
+            }
+        }
+    }
+    GenerateContentList();
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#cnblogs_post_body").append(
+            '<br/><hr/><div style="border: 2px dotted #4d90fe; padding: 2px; background-color: lightgray">    作者：<a href="https://www.cnblogs.com/loveliang/" target="_blank" title="小靓仔的博客" style="color: brown">小靓仔</a><br>    出处：<a href="https://www.cnblogs.com/loveliang/p/13552029.html" target="_blank" title="https://www.cnblogs.com/loveliang/" style="color: blue">https://www.cnblogs.com/loveliang/</a>    <br>如果您觉得阅读本文对您有帮助，请点击一下右下方的<b style="color: blue; font-size: 16px">推荐</b>按钮，您的<b style="color: blue; font-size: 16px">推荐</b>将是我写作的最大动力！    <br>版权声明：本文为博主原创或转载文章，欢迎转载，<b>但转载文章之后必须在文章页面明显位置注明出处</b>，否则保留追究法律责任的权利。</div>'
+            );
+    });
+</script>
